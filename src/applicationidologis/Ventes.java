@@ -158,7 +158,7 @@ tblVentes.setModel(model);
 
         btnRetVentes.setBackground(new java.awt.Color(234, 212, 137));
         btnRetVentes.setText("RETOUR");
-        btnRetVentes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnRetVentes.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnRetVentes.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
         btnRetVentes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -426,7 +426,7 @@ tblVentes.setModel(model);
         String id;
         id = (String.valueOf(tblVentes.getValueAt(tblVentes.getSelectedRow(), 0)));
         try {
-            Rs=stm.executeQuery("SELECT reference, type.libelle AS type, secteur.libelle AS secteur, surface, chambres, surface_terrain, classe_energetique, les_plus, prix " +
+            Rs=stm.executeQuery("SELECT reference, type.libelle AS type, secteur.libelle AS secteur, surface, chambres, surface_terrain, classe_energetique, les_plus, prix, img " +
 "	FROM vente " +
 "	INNER JOIN type ON type.id = vente.id_type " +
 "	INNER JOIN secteur ON secteur.id = vente.id_secteur" +
@@ -441,6 +441,7 @@ tblVentes.setModel(model);
             txtCE.setText(Rs.getString(7));  
             txtPlus.setText(Rs.getString(8));
             txtPrix.setText(Rs.getString(9));
+            txtImg.setText(Rs.getString(10));
 
 
         }

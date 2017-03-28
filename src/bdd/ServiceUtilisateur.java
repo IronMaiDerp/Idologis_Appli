@@ -18,9 +18,13 @@ public class ServiceUtilisateur {
     Connection con;
     ResultSet rs;
     
-
+    public ServiceUtilisateur() throws SQLException {
+        Cobdd co = new Cobdd();       
+        con = co.obtenirconnexion();
+    }
     
     public boolean utilisateurExiste(String pPassword, String pIdentifiant) throws SQLException, NoSuchAlgorithmException{
+
         boolean existe = false;
         Statement stat =con.createStatement();
         rs = stat.executeQuery("select username, password from admin;");

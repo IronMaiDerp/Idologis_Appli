@@ -147,21 +147,25 @@ public class appliIdologis extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_connectActionPerformed
-        lbl_erreur.setText("");
-        String username = txt_email.getText();
-        String password = txt_mdp.getText();
-        bdd.ServiceUtilisateur admin = new bdd.ServiceUtilisateur();
-        try {
+        try {                                            
+            lbl_erreur.setText("");
+            String username = txt_email.getText();
+            String password = txt_mdp.getText();
+            bdd.ServiceUtilisateur admin = new bdd.ServiceUtilisateur();
             try {
-                if(admin.utilisateurExiste(password, username)){
-                    System.out.println("vous etes bien connecté");
-                    Menu fenetre = new Menu();
-                    fenetre.setVisible(true);
-                    this.dispose();
-                }else{
-                    lbl_erreur.setText("Mot de passe ou login incorrect");
+                try {
+                    if(admin.utilisateurExiste(password, username)){
+                        System.out.println("vous etes bien connecté");
+                        Menu fenetre = new Menu();
+                        fenetre.setVisible(true);
+                        this.dispose();
+                    }else{
+                        lbl_erreur.setText("Mot de passe ou login incorrect");
+                    }
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(appliIdologis.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (NoSuchAlgorithmException ex) {
+            } catch (SQLException ex) {
                 Logger.getLogger(appliIdologis.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (SQLException ex) {

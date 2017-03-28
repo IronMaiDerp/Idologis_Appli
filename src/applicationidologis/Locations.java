@@ -5,8 +5,19 @@
  */
 package applicationidologis;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 
@@ -98,6 +109,7 @@ tblLoca.setModel(model);
         jLabel9 = new javax.swing.JLabel();
         comboSecteur = new javax.swing.JComboBox<>();
         txtImg = new javax.swing.JTextField();
+        jEnv = new javax.swing.JCheckBox();
         btnRetLoc = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -146,6 +158,13 @@ tblLoca.setModel(model);
             }
         });
 
+        jEnv.setText("Envoyer");
+        jEnv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEnvActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -181,12 +200,13 @@ tblLoca.setModel(model);
                             .addComponent(jLabel9))
                         .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPlus)
+                            .addComponent(txtLoyer, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtLoyer, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtImg, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                .addComponent(txtImg, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jEnv))
+                            .addComponent(txtPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +240,8 @@ tblLoca.setModel(model);
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(txtImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jEnv))
                 .addGap(24, 24, 24))
         );
 
@@ -294,7 +315,6 @@ tblLoca.setModel(model);
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAjouterL, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(80, 80, 80)
@@ -305,9 +325,10 @@ tblLoca.setModel(model);
                         .addComponent(btnRetLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(116, 116, 116)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(jFileLoca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 718, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jFileLoca, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -417,6 +438,7 @@ tblLoca.setModel(model);
             txtCE.setText(Rs.getString(7));
             txtPlus.setText(Rs.getString(8));
             txtLoyer.setText(Rs.getString(9));
+            txtImg.setText(Rs.getString(10));
 
   
 
@@ -516,10 +538,24 @@ tblLoca.setModel(model);
 
     private void jFileLocaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileLocaActionPerformed
         // TODO add your handling code here:
-        
-        txtImg.setText(jFileLoca.getSelectedFile().getName());
+
+    txtImg.setText(jFileLoca.getSelectedFile().getName());
         
     }//GEN-LAST:event_jFileLocaActionPerformed
+
+    private void jEnvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEnvActionPerformed
+        // TODO add your handling code here:
+              
+        Path source = Paths.get(jFileLoca.getSelectedFile().getAbsolutePath());
+        Path target = Paths.get("192.168.176.10/var/www/idologis/img/");
+    try {
+        Files.copy(source, target, REPLACE_EXISTING); 
+    } catch (IOException ex) {
+        Logger.getLogger(Locations.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+        
+    }//GEN-LAST:event_jEnvActionPerformed
 
     /**
      * @param args the command line arguments
@@ -563,6 +599,7 @@ tblLoca.setModel(model);
     private javax.swing.JButton btnSupprL;
     private javax.swing.JComboBox<String> comboSecteur;
     public javax.swing.JComboBox<String> comboType;
+    private javax.swing.JCheckBox jEnv;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFileChooser jFileLoca;
     private javax.swing.JLabel jLabel1;
