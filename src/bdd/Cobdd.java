@@ -22,8 +22,8 @@ public static void main(String args[]) {
     }
       
     try{
-        con=DriverManager.getConnection("jdbc:mysql://192.168.176.15:3306/idologis","julien","root");
-        /*con=DriverManager.getConnection("jdbc:mysql://localhost:3306/bddIdologis","root","root");*/
+        /*con=DriverManager.getConnection("jdbc:mysql://192.168.176.15:3306/idologis","julien","root");*/
+        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/bddIdologis","root","root");
       }
     catch(SQLException e){
         System.err.println(e);

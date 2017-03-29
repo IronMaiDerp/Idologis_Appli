@@ -5,22 +5,9 @@
  */
 package applicationidologis;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-
 import javax.swing.JOptionPane;
-
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -546,15 +533,7 @@ tblLoca.setModel(model);
     private void jEnvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEnvActionPerformed
         // TODO add your handling code here:
               
-        Path source = Paths.get(jFileLoca.getSelectedFile().getAbsolutePath());
-        Path target = Paths.get("192.168.176.10/var/www/idologis/img/");
-    try {
-        Files.copy(source, target, REPLACE_EXISTING); 
-    } catch (IOException ex) {
-        Logger.getLogger(Locations.class.getName()).log(Level.SEVERE, null, ex);
-    }
-
-        
+     
     }//GEN-LAST:event_jEnvActionPerformed
 
     /**
